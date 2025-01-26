@@ -9,16 +9,25 @@ pipeline {
                     reuseNode true
                 }
             }
-          steps {
-            sh '''
-               ls -la
-               node --version
-               npm --version
-               npm ci
-               npm run build
-               ls -la
-            '''
-          }
-       }
-   }
+            steps {
+                script {
+                    echo "Starting Docker container..."
+                }
+                sh '''
+                   echo "Listing files before build:"
+                   ls -la
+                   echo "Node version:"
+                   node --version
+                   echo "npm version:"
+                   npm --version
+                   echo "Running npm ci..."
+                   npm ci
+                   echo "Running npm build..."
+                   npm run build
+                   echo "Listing files after build:"
+                   ls -la
+                '''
+            }
+        }
+    }
 }
